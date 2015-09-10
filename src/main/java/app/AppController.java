@@ -1,10 +1,12 @@
-package app;
+package main.java.app;
 
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import main.java.app.NameGenerator;
 
 @Controller
 public class AppController {
