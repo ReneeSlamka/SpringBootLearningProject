@@ -12,6 +12,9 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
+mainClassName = 'app.Application'
+
+
 jar {
     baseName = 'gs-practice-springboot-app'
     version =  '0.1.0'
