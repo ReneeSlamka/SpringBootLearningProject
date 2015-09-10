@@ -12,7 +12,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
-mainClassName = 'app.Application'
+mainClassName = 'main.java.app.Application'
 
 
 jar {
