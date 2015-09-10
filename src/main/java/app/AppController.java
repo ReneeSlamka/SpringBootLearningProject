@@ -14,8 +14,10 @@ public class AppController {
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
 
-    @RequestMapping("/name")
-    public @ResponseBody NameGenerator generatedName(@RequestParam(value="name", defaultValue="World") String name) {
-        return new NameGenerator(name);
+    @RequestMapping("/nameGenerator")
+    public @ResponseBody NameGenerator generatedName(
+    		@RequestParam(value="name", defaultValue="World") String name,
+    		@RequestParam(value="age", defaultValue="22") String age) {
+        return new NameGenerator(name, age);
     }
 }
