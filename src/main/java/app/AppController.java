@@ -18,6 +18,6 @@ public class AppController {
     public @ResponseBody NameGenerator generatedName(
     		@RequestParam(value="name", defaultValue="World") String name,
     		@RequestParam(value="age", defaultValue="22") String age) {
-        return new NameGenerator(name, age);
+        return new NameGenerator(name, Integer.parseInt(age));
     }
 }

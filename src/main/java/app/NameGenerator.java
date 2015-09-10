@@ -1,17 +1,17 @@
 package main.java.app;
 
 public class NameGenerator {
-	private final String age;
+	private final int age;
 	private final String name;
 	private final String generatedName;
 
-	public NameGenerator(String name, String age) {
+	public NameGenerator(String name, int age) {
 		this.age = age;
 		this.name = name;
 		this.generatedName = "Test " + name;//this.generateName(age, name);
 	}
 
-	public String getAge() {
+	public int getAge() {
 		return age;
 	}
 
