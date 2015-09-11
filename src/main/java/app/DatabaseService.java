@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class DatabaseService {
 	
-	public void runDb(JdbcTemplate jdbcTemplate, Logger log) throws Exception {
+	public static void runDb(JdbcTemplate jdbcTemplate, Logger log) throws Exception {
 		log.info("Creating tables");
 
         jdbcTemplate.execute("DROP TABLE MAPPEDNAMEPAIRS IF EXISTS");
@@ -36,7 +36,6 @@ public class DatabaseService {
         log.info("Querying for mapped name records where submitted_name = 'Ben':");
         jdbcTemplate.query("SELECT submitted_name, got_name FROM MAPPEDNAMEPAIRS WHERE submitted_name = ?", new Object[] { "Ben" },
                 (rs, rowNum) -> new MappedNamePair(rs.getString("submitted_name"), rs.getString("got_name"))
-        ).forEach(customer -> log.info(customer.toString()));
-		
+        ).forEach(customer -> log.info(customer.toString()));	
 	}
 }
