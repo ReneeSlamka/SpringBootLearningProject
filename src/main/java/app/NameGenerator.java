@@ -39,7 +39,7 @@ public class NameGenerator {
 		if (age < 40) {
 			ageDependentWord = " the Mangler";
 		} else {
-			ageDependentWord = " the Giezer";
+			ageDependentWord = " the Geezer";
 		}
 
 		return "Your Game of Thrones name is " + matchedName + ageDependentWord;
