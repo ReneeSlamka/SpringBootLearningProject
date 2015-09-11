@@ -17,13 +17,13 @@ public class AppController {
 
     //private static final String template = "Hello, %s!";
     //private final AtomicLong counter = new AtomicLong();
-    //private DatabaseService testDB = new DatabaseService();
     private static final Logger log = LoggerFactory.getLogger(Application.class);
     
     @Autowired
     JdbcTemplate jdbcTemplate;
-
-
+    
+    private DatabaseService testDB = new DatabaseService(log);
+    
     @RequestMapping("/nameGenerator")
     public @ResponseBody NameGenerator generatedName(
     		@RequestParam(value="name", defaultValue="World") String name,
@@ -33,7 +33,7 @@ public class AppController {
     
     @RequestMapping("/test")
     public @ResponseBody NameGenerator generatedName() throws Exception {
-    	DatabaseService.runDb(jdbcTemplate, log);
+    	testDB.runDb(jdbcTemplate);
         return new NameGenerator("Work being done on DB", Integer.parseInt("200"));
     }
 }

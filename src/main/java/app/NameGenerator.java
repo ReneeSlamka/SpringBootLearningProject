@@ -1,4 +1,5 @@
 package main.java.app;
+import main.java.app.DatabaseService;
 
 public class NameGenerator {
 	private final String name;
