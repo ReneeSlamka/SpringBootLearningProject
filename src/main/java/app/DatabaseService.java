@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DatabaseService implements CommandLineRunner{
+public class DatabaseService {
 	
 	public void runDb(JdbcTemplate jdbcTemplate, Logger log) throws Exception {
 		log.info("Creating tables");
@@ -37,12 +37,6 @@ public class DatabaseService implements CommandLineRunner{
         jdbcTemplate.query("SELECT submitted_name, got_name FROM MAPPEDNAMEPAIRS WHERE submitted_name = ?", new Object[] { "Ben" },
                 (rs, rowNum) -> new MappedNamePair(rs.getString("submitted_name"), rs.getString("got_name"))
         ).forEach(customer -> log.info(customer.toString()));
-		
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
 		
 	}
 }
