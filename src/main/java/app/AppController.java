@@ -1,6 +1,9 @@
 package main.java.app;
 
 import java.util.concurrent.atomic.AtomicLong;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,19 +24,27 @@ public class AppController {
     
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    private DatabaseService databaseService = new DatabaseService(log);
     
-    private DatabaseService testDB = new DatabaseService(log);
+    @PostConstruct
+    public void setUpDatabase() {
+    	//do later
+    }
+    
     
     @RequestMapping("/nameGenerator")
     public @ResponseBody NameGenerator generatedName(
     		@RequestParam(value="name", defaultValue="World") String name,
-    		@RequestParam(value="age", defaultValue="22") String age) {
-        return new NameGenerator(name, Integer.parseInt(age));
+    		@RequestParam(value="age", defaultValue="22") String age) throws Exception {
+    	databaseService.runDb(jdbcTemplate);
+    	String databaseName = databaseService.queryForEntry(jdbcTemplate, name);
+        return new NameGenerator(name, Integer.parseInt(age), databaseName);
     }
     
     @RequestMapping("/test")
     public @ResponseBody NameGenerator generatedName() throws Exception {
-    	testDB.runDb(jdbcTemplate);
-        return new NameGenerator("Work being done on DB", Integer.parseInt("200"));
+    	databaseService.runDb(jdbcTemplate);
+        return new NameGenerator("Work being done on DB", Integer.parseInt("200"), "Baratheon");
     }
 }

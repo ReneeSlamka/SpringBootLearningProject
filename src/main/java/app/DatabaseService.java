@@ -26,7 +26,6 @@ public class DatabaseService {
         
 		createTable(jdbcTemplate);
 		insertTableEntries(jdbcTemplate, splitUpNames);
-		queryForEntry(jdbcTemplate, "Ben");
 	}
 	
 	public void createTable(JdbcTemplate jdbcTemplate) {
@@ -46,10 +45,11 @@ public class DatabaseService {
         jdbcTemplate.batchUpdate("INSERT INTO MAPPEDNAMEPAIRS (submitted_name, got_name) VALUES (?, ?)", databaseEntries);
 	}
 	
-	public void queryForEntry(JdbcTemplate jdbcTemplate, String searchTerm) {
+	public String queryForEntry(JdbcTemplate jdbcTemplate, String searchTerm) {
 		log.info("Querying for mapped name records where submitted_name = 'Ben':");
-        jdbcTemplate.query("SELECT submitted_name, got_name FROM MAPPEDNAMEPAIRS WHERE submitted_name = ?", new Object[] { "Ben" },
+        jdbcTemplate.query("SELECT submitted_name, got_name FROM MAPPEDNAMEPAIRS WHERE submitted_name = ?", new Object[] { searchTerm },
                 (rs, rowNum) -> new MappedNamePair(rs.getString("submitted_name"), rs.getString("got_name"))
         ).forEach(customer -> log.info(customer.toString()));	
+        return new String("Baraetheon");
 	}
 }
