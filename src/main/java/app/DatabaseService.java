@@ -13,18 +13,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DatabaseService implements CommandLineRunner{
-	private static final Logger log = LoggerFactory.getLogger(Application.class);
-
-    @Autowired
-    JdbcTemplate jdbcTemplate;
 	
-	@Override
-	public void run(String... args) throws Exception {
+	public void runDb(JdbcTemplate jdbcTemplate, Logger log) throws Exception {
 		log.info("Creating tables");
 
-        jdbcTemplate.execute("DROP TABLE customers IF EXISTS");
-        jdbcTemplate.execute("CREATE TABLE customers(" +
-                "id SERIAL, first_name VARCHAR(255), last_name VARCHAR(255))");
+        jdbcTemplate.execute("DROP TABLE MAPPEDNAMEPAIRS IF EXISTS");
+        jdbcTemplate.execute("CREATE TABLE MAPPEDNAMEPAIRS(" +
+                "submitted_name VARCHAR(255), got_name VARCHAR(255))");
 
         // Split up the array of whole names into an array of first/last names
         // TODO: Change this to read from a text file later
@@ -36,13 +31,18 @@ public class DatabaseService implements CommandLineRunner{
         splitUpNames.forEach(name -> log.info(String.format("Inserting name match pair containing %s and %s", name[0], name[1])));
 
         // Uses JdbcTemplate's batchUpdate operation to bulk load data
-        jdbcTemplate.batchUpdate("INSERT INTO MAPPEDNAMEPAIRS(submitted_name, got_name) VALUES (?,?)", splitUpNames);
+        jdbcTemplate.batchUpdate("INSERT INTO MAPPEDNAMEPAIRS (submitted_name, got_name) VALUES (?, ?)", splitUpNames);
 
-        log.info("Querying for customer records where submitted_name = 'Ben':");
-        jdbcTemplate.query(
-                "SELECT id, first_name, last_name FROM customers WHERE first_name = ?", new Object[] { "Josh" },
-                (rs, rowNum) -> new MappedNamePair(rs.getString("first_name"), rs.getString("last_name"))
+        log.info("Querying for mapped name records where submitted_name = 'Ben':");
+        jdbcTemplate.query("SELECT submitted_name, got_name FROM MAPPEDNAMEPAIRS WHERE submitted_name = ?", new Object[] { "Ben" },
+                (rs, rowNum) -> new MappedNamePair(rs.getString("submitted_name"), rs.getString("got_name"))
         ).forEach(customer -> log.info(customer.toString()));
+		
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		// TODO Auto-generated method stub
 		
 	}
 }
