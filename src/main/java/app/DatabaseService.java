@@ -3,6 +3,7 @@ package main.java.app;
 import org.slf4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,10 +47,18 @@ public class DatabaseService {
 	}
 	
 	public String queryForEntry(JdbcTemplate jdbcTemplate, String searchTerm) {
-		log.info("Querying for mapped name records where submitted_name = 'Ben':");
+		log.info("Querying for mapped name records where submitted_name = " + searchTerm + ":");
+		
+		ArrayList<String> matches = new ArrayList<String>(); 
+		
         jdbcTemplate.query("SELECT submitted_name, got_name FROM MAPPEDNAMEPAIRS WHERE submitted_name = ?", new Object[] { searchTerm },
                 (rs, rowNum) -> new MappedNamePair(rs.getString("submitted_name"), rs.getString("got_name"))
-        ).forEach(customer -> log.info(customer.toString()));	
-        return new String("Baraetheon");
+        ).forEach(customer -> matches.add(customer.getGameOfThronesName()));
+        
+        if (matches.size() > 0) {
+        	return matches.get(0);
+        } else {
+        	return new String("Unknown Monster");
+        }
 	}
 }

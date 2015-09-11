@@ -20,7 +20,7 @@ public class MappedNamePair {
     	return submittedName;
     }
     
-    public String getGamoeOfThronesName() {
+    public String getGameOfThronesName() {
     	return gameOfThronesName;
     }
 }

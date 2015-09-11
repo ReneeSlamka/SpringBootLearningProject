@@ -18,8 +18,6 @@ import org.slf4j.LoggerFactory;
 @Controller
 public class AppController {
 
-    //private static final String template = "Hello, %s!";
-    //private final AtomicLong counter = new AtomicLong();
     private static final Logger log = LoggerFactory.getLogger(Application.class);
     
     @Autowired
