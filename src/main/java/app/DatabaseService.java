@@ -17,11 +17,12 @@ public class DatabaseService {
 		this.log = log;
 	}
 	
-	public void runDb(JdbcTemplate jdbcTemplate) throws Exception {
+	public void runDb(JdbcTemplate jdbcTemplate, String[] textEntries) throws Exception {
 
         // Split up the array of whole names into an array of first/last names
         // TODO: Change this to read from a text file later
-        List<Object[]> splitUpNames = Arrays.asList("Ben Baratheon", "Anna Stark", "Laura Lanister", "Tom Tyrell").stream()
+		//String[] listNames = {"Ben Baratheon", "Anna Stark", "Laura Lanister", "Tom Tyrell"};
+        List<Object[]> splitUpNames = Arrays.asList(textEntries).stream()
                 .map(name -> name.split(" "))
                 .collect(Collectors.toList());
         
